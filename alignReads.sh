@@ -47,13 +47,13 @@ function detectAllelicConcatenated {
     then
         printProgress "[detectAllelicConcatenated] Filtered BAM file created."
         # remove temp files
-        if [ $AL_DEBUG = 0 ]; then
-            printProgress "[detectAllelicConcatenated] Removing temporary SAM files."
-            rm -f "$PARAM_OUT_PREFIX".sam
-            rm -f "$PARAM_OUT_PREFIX".unsorted.bam
-        fi
-    else
-        printProgress "[detectAllelicConcatenated] ERROR: Filtered BAM file was not created."
+        # if [ $AL_DEBUG = 0 ]; then
+        #     printProgress "[detectAllelicConcatenated] Removing temporary SAM files."
+        #     rm -f "$PARAM_OUT_PREFIX".sam
+        #     rm -f "$PARAM_OUT_PREFIX".unsorted.bam
+        # fi
+    # else
+    #     printProgress "[detectAllelicConcatenated] ERROR: Filtered BAM file was not created."
     fi
     printProgress "[detectAllelicConcatenated] Done"
 }
