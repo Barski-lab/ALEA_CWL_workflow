@@ -90,8 +90,8 @@ function detectAllelicSeparate {
 
     # sort .bam
     printProgress "sorting bam file"
-    samtools sort "$PARAM_OUT_PREFIX1".unsorted.bam "$PARAM_OUT_PREFIX1"
-    samtools sort "$PARAM_OUT_PREFIX2".unsorted.bam "$PARAM_OUT_PREFIX2"
+    samtools sort "$PARAM_OUT_PREFIX1".unsorted.bam -o "$PARAM_OUT_PREFIX1"
+    samtools sort "$PARAM_OUT_PREFIX2".unsorted.bam -o "$PARAM_OUT_PREFIX2"
     
     # remove temp files
     # if [ $AL_DEBUG = 0 ]; then
