@@ -1,0 +1,77 @@
+class: DockerRequirement
+#dockerImageId: scidap/bwa:v0.7.12 #not yet ready
+dockerPull: scidap/detect_allele
+dockerFile: |
+  #################################################################
+  # Dockerfile
+  #
+  # Software:         detect_allele
+  # Software Version: 0.7.12
+  # Description:      SciDAP detect_allele Image
+  # Website:          http://scidap.com/
+  # Provides:         bwa
+  # Base Image:       scidap/samtools
+  # Build Cmd:        docker build --rm -t scidap/detect_allele.
+  # Pull Cmd:         docker pull scidap/detect_allele
+  # Run Cmd:          docker run --rm scidap/detect_allele
+  #################################################################
+
+  FROM scidap/samtools:v1.2-242-4d56437
+  MAINTAINER BHARATH MANICKA VASAGAM bharath.manickavasagam@cchmc.org
+  ENV DEBIAN_FRONTEND noninteractive
+
+  ################## BEGIN INSTALLATION ######################
+  WORKDIR /usr/local/bin/
+
+  #Detecting Allele Script
+  RUN echo 'function aleaCheckFileExists {\n\
+    if [ ! -f "$1" ]; then\n\
+        echo "Error: File $1 does not exist"\n\
+        exit 1\n\
+    fi\n\
+  }   \n\
+  function printProgress {\n\
+    echo $1 at [`date`]\n\
+  }\n\
+  function detectAllelicConcatenated {\n\
+    \n\
+    printProgress "[detectAllelicConcatenated] Started"\n\
+\n\
+     local PARAM_INPUT_SAM=$1\n\
+     local PARAM_STRAIN=$2\n\
+     local PARAM_REFFASTA=$3   \n\
+     local PARAM_QUALITY=$4\n\
+     local PARAM_OUT_PREFIX=$5\n\
+    
+    # output header first
+    $AL_BIN_SAMTOOLS view -SH "$PARAM_INPUT_SAM" \
+        | awk -v ref="$PARAM_STRAIN" '($0 ~ ref) {print $0}' \
+        | sed 's/'"$PARAM_STRAIN"'_chr//g' \
+        > "$PARAM_OUT_PREFIX".sam
+    
+    # append reads
+    $AL_BIN_SAMTOOLS view -S $PARAM_INPUT_SAM \
+        | awk -v ref="$PARAM_STRAIN" '(($3 ~ ref)&&($5'"$PARAM_QUALITY"')) {print $0}' \
+        | sed 's/'"$PARAM_STRAIN"'_chr//g' \
+        >> "$PARAM_OUT_PREFIX".sam
+
+    # convert to bam
+    $AL_BIN_SAMTOOLS view -bt $PARAM_REFFASTA "$PARAM_OUT_PREFIX".sam > "$PARAM_OUT_PREFIX".unsorted.bam
+    
+    # sort by coordinates
+    $AL_BIN_SAMTOOLS sort "$PARAM_OUT_PREFIX".unsorted.bam "$PARAM_OUT_PREFIX" 
+    
+    if [ -f "$PARAM_OUT_PREFIX".bam ]
+    then
+        printProgress "[detectAllelicConcatenated] Filtered BAM file created."
+        # remove temp files
+        if [ $AL_DEBUG = 0 ]; then
+            printProgress "[detectAllelicConcatenated] Removing temporary SAM files."
+            rm -f "$PARAM_OUT_PREFIX".sam
+            rm -f "$PARAM_OUT_PREFIX".unsorted.bam
+        fi
+    else
+        printProgress "[detectAllelicConcatenated] ERROR: Filtered BAM file was not created."
+    fi
+    printProgress "[detectAllelicConcatenated] Done"
+  }
