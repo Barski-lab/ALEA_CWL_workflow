@@ -2,9 +2,9 @@
 
 cwlVersion: v1.0
 
-baseCommand: [bwa, aln]
-
 class: CommandLineTool
+
+baseCommand: [bwa, aln]
 
 requirements:
 - $import: bwa-docker.yml
@@ -16,6 +16,8 @@ inputs:
     type: File
     inputBinding:
       position: 4
+    doc: |
+       Input fasta file with all indexed files.
     secondaryFiles:
     - ".amb"
     - ".ann"
@@ -108,7 +110,7 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.output_dir_file)
 
 $namespaces:
   s: http://schema.org/
