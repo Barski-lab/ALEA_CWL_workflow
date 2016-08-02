@@ -27,11 +27,15 @@ inputs:
 
   input:
     type: File
+    doc: |
+       Input fastq file
     inputBinding:
       position: 5
 
-  output_dir_file:
+  output_file_name:
     type: string
+    doc: |
+       Output file name
     inputBinding:
       position: 1
       prefix: "-f"
@@ -110,13 +114,13 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: $(inputs.output_dir_file)
+      glob: $(inputs.output_file_name)
 
 $namespaces:
   s: http://schema.org/
 
 $schemas:
-- https://sparql-test.commonwl.org/schema.rdf
+- http://schema.org/docs/schema_org_rdfa.html
 
 s:downloadUrl: https://github.com/common-workflow-language/workflows/blob/master/tools/alea-createGenome.cwl
 s:codeRepository: https://github.com/common-workflow-language/workflows

@@ -13,14 +13,14 @@ inputs:
   file1:
     type: File
     doc: |
-      Input BAM file 1
+      Input SAM file 1 with .c56c56 extension
     inputBinding:
       position: 2
 
   file2:
     type: File
     doc: |
-      Input BAM file 2
+      Input SAM file 2 with .sam extension
     inputBinding: 
       position: 3
 
@@ -36,4 +36,4 @@ arguments:
       }
      position: 1
 
-stdout: $(inputs.file1.basename+'_unsorted.bam')
+stdout: $(inputs.file1.basename.split("/").slice(0,2- 1).join("/")+("/")+inputs.file2.nameroot+'_unsorted.sam')

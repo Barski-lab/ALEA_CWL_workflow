@@ -1,34 +1,32 @@
 cwlVersion: v1.0
 class: Workflow
 inputs:
-  bam_file1: 
+  sam_file1: 
     type: File
     doc: |
-      BAM file
+      SAM file 1 (fastq_strain1.sam format)
 
-  bam_file2: 
+  sam_file2: 
     type: File
     doc: |
-      BAM file 2
+      SAM file 2 (fastq_strain2.sam format)
 
 outputs:
   concat_out: 
     type: File
     outputSource: paste/output
 
-    
 steps:
-  
   cut1:
     run: cut.cwl
     in:
-      file1: bam_file1
+      file: sam_file1
     out: [output]
 
   cut2:
     run: cut.cwl
     in:
-      file1: bam_file2
+      file: sam_file2
     out: [output]
 
   paste:

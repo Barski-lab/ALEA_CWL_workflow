@@ -10,7 +10,7 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-  file1:
+  file:
     type: File
     doc: |
       Input file from which 5th and 6th column is taken out
@@ -22,5 +22,5 @@ outputs:
   output:
     type: stdout
 
-stdout: $(inputs.file1.basename+".c56")
+stdout: $(inputs.file.basename.split('.')[0]+".c56")
 

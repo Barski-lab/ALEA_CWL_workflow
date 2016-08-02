@@ -73,7 +73,7 @@ $namespaces:
   s: http://schema.org/
 
 $schemas:
-- https://sparql-test.commonwl.org/schema.rdf
+- http://schema.org/docs/schema_org_rdfa.html
 
 s:downloadUrl: https://github.com/common-workflow-language/workflows/blob/master/tools/alea-createGenome.cwl
 s:codeRepository: https://github.com/common-workflow-language/workflows

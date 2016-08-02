@@ -28,4 +28,4 @@ outputs:
   output:
     type: stdout
 
-stdout: $(inputs.file1.basename+"/"+inputs.file1.nameroot+"_"+inputs.file2.nameroot+".c5656")
+stdout: $(inputs.file1.basename.split("/").slice(0,2- 1).join("/")+("/")+inputs.file1.nameroot+"_"+inputs.file2.nameroot+inputs.file1.nameext+inputs.file2.nameext.split('.')[1])
