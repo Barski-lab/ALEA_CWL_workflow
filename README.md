@@ -2,4 +2,4 @@
 
 Source: https://github.com/hyounesy/ALEA
 
-Conversion of the shell script into Common Workflow
+ALEA - Common Workflow Language Wrapper for ALEA - Align Reads
