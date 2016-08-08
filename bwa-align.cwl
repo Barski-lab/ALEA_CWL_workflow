@@ -15,14 +15,14 @@ inputs:
   prefix:
     type: File
     inputBinding:
-      position: 4
+      position: 2
     doc: |
        Input fasta file with all indexed files.
     secondaryFiles:
-    - ".amb"
     - ".ann"
-    - ".pac"
     - ".sa"
+    - ".pac"
+    - ".amb"
     - ".bwt"
 
   input:
@@ -30,14 +30,14 @@ inputs:
     doc: |
        Input fastq file
     inputBinding:
-      position: 5
+      position: 3
 
   output_file_name:
     type: string
     doc: |
        Output file name
     inputBinding:
-      position: 1
+      position: 4
       prefix: "-f"
 
   threads:
@@ -46,6 +46,13 @@ inputs:
       position: 1
       prefix: "-t"
 
+  n:
+    type: int?
+    doc: |
+        Maximum edit distance if the value is INT, or the fraction of missing alignments given 2% uniform base error rate if FLOAT. In the latter case, the maximum edit distance is automatically chosen for different read lengths. [0.04]
+    inputBinding: 
+      position: 1
+      prefix: "-n"
   o:
     type: int?
     doc: |
@@ -116,31 +123,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_file_name)
 
-$namespaces:
-  s: http://schema.org/
-
-$schemas:
-- http://schema.org/docs/schema_org_rdfa.html
-
-s:downloadUrl: https://github.com/common-workflow-language/workflows/blob/master/tools/alea-createGenome.cwl
-s:codeRepository: https://github.com/common-workflow-language/workflows
-s:license: http://www.apache.org/licenses/LICENSE-2.0
-s:isPartOf:
-  class: s:CreativeWork
-  s:name: "Common Workflow Language"
-  s:url: http://commonwl.org/
-
-s:author:
-  class: s:Person
-  s:name: "Andrey Kartashov"
-  s:email: mailto:Andrey.Kartashov@cchmc.org
-  s:sameAs:
-  - id: http://orcid.org/0000-0001-9102-5681
-  s:worksFor:
-  - class: s:Organization
-    s:name: "Cincinnati Children's Hospital Medical Center"
-    s:location: "3333 Burnet Ave, Cincinnati, OH 45229-3026"
-    s:department:
-    - class: s:Organization
-      s:name: "Barski Lab"
 

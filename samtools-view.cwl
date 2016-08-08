@@ -15,7 +15,7 @@ doc: |
              -h       include header in SAM output
              -H       print SAM header only (no alignments)
              -c       print only the count of matching records
-             -S       If the 
+             -S       If the file is SAM 
              -o FILE  output file name [stdout]
              -U FILE  output reads not selected by filters to FILE [null]
              -t FILE  FILE listing reference names and lengths (see long help) [null]
@@ -45,21 +45,21 @@ inputs:
  input:
   type: File
   doc: |
-    Input bam file.
+    Input bam/sam file.
   inputBinding:
-    position: 4
+    position: 2
 
  region:
   type: string?
   doc: |
     [region ...]
   inputBinding:
-    position: 5
+    position: 3
 
  output_name:
   type: string
   inputBinding:
-    position: 2
+    position: 4
     prefix: "-o"
 
  isbam:
@@ -68,7 +68,7 @@ inputs:
   doc: |
     output in BAM format
   inputBinding:
-    position: 2
+    position: 1
     prefix: "-b"
 
  iscram:
@@ -77,7 +77,7 @@ inputs:
   doc: |
     output in CRAM format
   inputBinding:
-    position: 2
+    position: 1
     prefix: "-C"
  
  isHeader:
@@ -86,7 +86,7 @@ inputs:
   doc: |
     Output only headers
   inputBinding:
-    position: 2
+    position: 1
     prefix: "-H"
 
  fastcompression:
@@ -231,6 +231,14 @@ inputs:
   inputBinding:
     position: 1
     prefix: "-@"
+ 
+ issam:
+  type: boolean?
+  doc: |
+    if the input is SAM file
+  inputBinding:
+    position: 1
+    prefix: "-S"
 
 outputs:
  output:
@@ -239,35 +247,3 @@ outputs:
     glob: $(inputs.output_name)
 
 baseCommand: ["samtools", "view"]
-
-$namespaces:
-  s: http://schema.org/
-
-$schemas:
-- http://schema.org/docs/schema_org_rdfa.html
-
-s:mainEntity:
-  $import: samtools-metadata.yaml
-
-s:downloadUrl: https://github.com/common-workflow-language/workflows/blob/master/tools/samtools-view.cwl
-s:codeRepository: https://github.com/common-workflow-language/workflows
-s:license: http://www.apache.org/licenses/LICENSE-2.0
-
-s:isPartOf:
-  class: s:CreativeWork
-  s:name: "Common Workflow Language"
-  s:url: http://commonwl.org/
-
-s:author:
-  class: s:Person
-  s:name: "Andrey Kartashov"
-  s:email: mailto:Andrey.Kartashov@cchmc.org
-  s:sameAs:
-  - id: http://orcid.org/0000-0001-9102-5681
-  s:worksFor:
-  - class: s:Organization
-    s:name: "Cincinnati Children's Hospital Medical Center"
-    s:location: "3333 Burnet Ave, Cincinnati, OH 45229-3026"
-    s:department:
-    - class: s:Organization
-      s:name: "Barski Lab"

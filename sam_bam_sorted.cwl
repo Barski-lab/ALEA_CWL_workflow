@@ -9,6 +9,10 @@ inputs:
   isbam:
     type: boolean?
     default: true
+  
+  issam:
+    type: boolean?
+    default: true
 
   output_bam:
     type: string
@@ -18,7 +22,7 @@ inputs:
 outputs:
   output:
     type: File
-    outputSource: sam_sort/output
+    outputSource: sam_sort/sorted
 
 steps:
   sam_view:
@@ -26,6 +30,7 @@ steps:
     in:
       input: sam_file
       output_name: output_bam
+      issam: issam
       isbam: isbam
     out: [output]
 
@@ -34,5 +39,5 @@ steps:
     in:
       input: sam_view/output
       output_name: output_bam
-    out: [output]
+    out: [sorted]
 

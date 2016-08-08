@@ -10,6 +10,12 @@ inputs:
     type: File
     doc: |
       Strain1_Fasta file
+    secondaryFiles:
+    - ".amb"
+    - ".ann"
+    - ".pac"
+    - ".sa"
+    - ".bwt"
 
   saifile:
     type: string
@@ -26,8 +32,16 @@ inputs:
     doc: |
       Final sam_file with .sam
 
+  n:
+    type: int
+    default: 0
+
+  k:
+    type: int
+    default: 0
+
 outputs:
-  output_sam:
+  output:
     type: File
     outputSource: bwa_samse/output
 
@@ -39,6 +53,8 @@ steps:
       input: fastq
       output_file_name: saifile
       threads: threads
+      n: n
+      k: k
     out: [output]
 
   bwa_samse:

@@ -33,5 +33,5 @@ steps:
     run: paste.cwl
     in:
       file1: cut1/output
-      file2: cut1/output
+      file2: cut2/output
     out: [output]

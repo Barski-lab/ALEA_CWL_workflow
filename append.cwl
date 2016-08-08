@@ -28,5 +28,5 @@ stdout: ${ var r=[];
            r[i]=inputs.file[i].nameroot;
              }
          }
-         return r.join('_');
+         return r.join('_')+inputs.file[0].nameext;
          }
